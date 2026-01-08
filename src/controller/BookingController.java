@@ -99,6 +99,10 @@ public class BookingController {
         if (target.isPresent()) {
             Booking booking = target.get();
             booking.cancel();
+            Payment payment = booking.getPayment();
+            if (payment != null) {
+                student.addFunds(payment.getAmount());
+            }
             // Booking cancelled successfully
             return "Success: Booking " + bookingId + " cancelled.";
         }
